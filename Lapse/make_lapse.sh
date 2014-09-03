@@ -3,7 +3,7 @@
 limit=480
 dirsrc=/root/snap/
 dirdest=/root/lapse/
-dirtmp=/tmp/lapsetmp/
+dirtmp=/tmp/lapseframetmp/
 dirweb=/data/www/lapse/
 bgmmp4="$dirdest"song/p727835.mp4
 bgmmp3=/tmp/bgm.mp3
@@ -21,7 +21,7 @@ for filesrc in `ls "$dirsrc"*.jpg | sort -r | head -n "$limit" | sort`
 do
     count=`expr $count + 1`
     filedest=`printf ""$dirtmp"snap_%.4d.jpg" "$count"`
-    cp "$filesrc" "$filedest"
+    ./convert_frame.sh "$filesrc" "$filedest"
 done
 
 # process background music and video
