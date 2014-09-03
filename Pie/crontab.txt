@@ -1,0 +1,5 @@
+# m h  dom mon dow   command
+* * * * * /root/script/photo.sh
+0 * * * *  /root/script/mailip.sh
+@reboot  /root/script/mailip.sh
+*/5 * * * * (sleep 10; rsync -aP /root/snapshot/*.jpg root@172.26.100.67:/root/snap/)
