@@ -1,6 +1,6 @@
 #!/bin/sh
 
-offset=180
+offset=0
 limit=480
 dirsrc=/root/snap/
 dirdest=/root/lapse/
