@@ -1,5 +1,6 @@
 #!/bin/sh
 
+offset=180
 limit=480
 dirsrc=/root/snap/
 dirdest=/root/lapse/
@@ -16,8 +17,10 @@ rm -fr "$dirtmp"
 mkdir "$dirtmp"
 
 # prepare photos
+index_head=`expr $limit + $offset`
+index_tail=`expr $limit`
 count=0
-for filesrc in `ls "$dirsrc"*.jpg | sort -r | head -n "$limit" | sort`
+for filesrc in `ls "$dirsrc"*.jpg | sort -r | head -n "$index_head" | tail -n "$index_tail" | sort`
 do
     count=`expr $count + 1`
     filedest=`printf ""$dirtmp"snap_%.4d.jpg" "$count"`
