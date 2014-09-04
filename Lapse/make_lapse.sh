@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 offset=0
-limit=480
+limit=600
 dirsrc=/root/snap/
 dirdest=/root/lapse/
 dirtmp=/tmp/lapseframetmp/
@@ -13,6 +13,13 @@ filemp4="$dirdest"timelapse.mp4
 filewmv="$dirdest"timelapse.wmv
 arcfile="$dirdest"archive/lapse"$(date '+-%Y_%m_%d-%H_%M_%S')".mp4
 
+if [ $# -ge 1 ];
+then
+    limit="$1"
+fi
+
+# start from here
+cd "$( dirname "${BASH_SOURCE[0]}" )"
 rm -fr "$dirtmp"
 mkdir "$dirtmp"
 

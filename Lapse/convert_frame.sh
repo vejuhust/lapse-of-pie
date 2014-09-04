@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 filelogo=logo.png
 filesrc="$1"
