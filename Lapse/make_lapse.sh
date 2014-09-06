@@ -6,6 +6,7 @@ dirsrc=/root/snap/
 dirdest=/root/lapse/
 dirtmp=/tmp/lapseframetmp/
 dirweb=/data/www/lapse/
+dirshare=/root/Dropbox/MicrosoftSuzhou/
 bgmmp4="$dirdest"song/p727835.mp4
 bgmmp3=/tmp/bgm.mp3
 fileavi="$dirdest"timelapse.avi
@@ -15,7 +16,7 @@ arcfile="$dirdest"archive/lapse"$(date '+-%Y_%m_%d-%H_%M_%S')".mp4
 
 if [ $# -ge 1 ];
 then
-    limit="$1"
+    limit=`expr $1 \* 60`
 fi
 
 # start from here
@@ -47,3 +48,6 @@ cp "$filewmv" "$dirweb"alpha.wmv
 
 # archive it
 mv "$filemp4" "$arcfile"
+
+# share it
+cp "$arcfile" "$dirshare"
