@@ -7,6 +7,7 @@ dirdest=/root/lapse/
 dirtmp=/tmp/lapseframetmp/
 dirweb=/data/www/lapse/
 dirshare=/root/Dropbox/MicrosoftSuzhou/
+dirpublic=/media/networkshare/stcsuz/lapsevideo/
 bgmmp4="$dirdest"song/p727835.mp4
 bgmmp3=/tmp/bgm.mp3
 fileavi="$dirdest"timelapse.avi
@@ -39,8 +40,8 @@ done
 ffmpeg -i "$bgmmp4" -y -vn -acodec libmp3lame -ac 2 -ab 128k -ar 48000 "$bgmmp3"
 mencoder mf://"$dirtmp"snap*.jpg -mf fps=20:type=jpg -ovc x264 -x264encopts pass=1:bitrate=3840000:crf=24 -of lavf -lavfopts format=mp4 -audiofile "$bgmmp3" -oac mp3lame -o "$filemp4"
 
-# convert into wmv for Windows users
-ffmpeg -i "$filemp4" -y -qscale 0 "$filewmv"
+# generate wmv version for Windows users
+mencoder mf://"$dirtmp"snap*.jpg -mf fps=20:type=jpg -ovc lavc -lavcopts vcodec=wmv2:vbitrate=30720000:trell -vf scale=1296:972 -audiofile "$bgmmp3" -oac mp3lame -o "$filewmv"
 
 # copy to the Web
 cp "$filemp4" "$dirweb"alpha.mp4
@@ -51,3 +52,4 @@ mv "$filemp4" "$arcfile"
 
 # share it
 cp "$arcfile" "$dirshare"
+cp "$arcfile" "$dirpublic"
