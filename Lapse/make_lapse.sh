@@ -1,14 +1,14 @@
 #!/bin/bash
 
 offset=0
-limit=600
+limit=1200
 dirsrc=/root/snap/
 dirdest=/root/lapse/
 dirtmp=/tmp/lapseframetmp/
 dirweb=/data/www/lapse/
 dirshare=/root/Dropbox/MicrosoftSuzhou/
 dirpublic=/media/networkshare/stcsuz/lapsevideo/
-bgmmp4="$dirdest"song/p727835.mp4
+bgmmp4="$dirdest"song/p2112104.mp4
 bgmmp3=/tmp/bgm.mp3
 fileavi="$dirdest"timelapse.avi
 filemp4="$dirdest"timelapse.mp4
