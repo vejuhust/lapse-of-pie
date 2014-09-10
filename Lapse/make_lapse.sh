@@ -36,11 +36,11 @@ do
     ./convert_frame.sh "$filesrc" "$filedest"
 done
 
-# process background music and video
-ffmpeg -i "$bgmmp4" -y -vn -acodec libmp3lame -ac 2 -ab 128k -ar 48000 "$bgmmp3"
-mencoder mf://"$dirtmp"snap*.jpg -mf fps=20:type=jpg -ovc x264 -x264encopts pass=1:bitrate=3840000:crf=24 -of lavf -lavfopts format=mp4 -audiofile "$bgmmp3" -oac mp3lame -o "$filemp4"
+# generate h264 version video for modern browsers' users
+ffmpeg -y -vn -f image2 -i "$dirtmp"snap_%04d.jpg -i "$bgmmp4" -shortest -r 20 -vf scale=1296:-1 -vcodec libx264 -crf 20 -tune stillimage -profile:v high -level 4.2 -acodec aac -ab 128k -strict experimental "$filemp4"
 
-# generate wmv version for Windows users
+# generate wmv version video for old-fashion browsers' users
+ffmpeg -i "$bgmmp4" -y -vn -acodec libmp3lame -ac 2 -ab 128k -ar 48000 "$bgmmp3"
 mencoder mf://"$dirtmp"snap*.jpg -mf fps=20:type=jpg -ovc lavc -lavcopts vcodec=wmv2:vbitrate=30720000:trell -vf scale=1296:972 -audiofile "$bgmmp3" -oac mp3lame -o "$filewmv"
 
 # copy to the Web
