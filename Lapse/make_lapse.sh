@@ -26,10 +26,8 @@ rm -fr "$dirtmp"
 mkdir "$dirtmp"
 
 # prepare photos
-index_head=`expr $limit + $offset`
-index_tail=`expr $limit`
 count=0
-for filesrc in `ls "$dirsrc"*.jpg | sort -r | head -n "$index_head" | tail -n "$index_tail" | sort`
+for filesrc in $(./filter_file.sh "$dirsrc" "$limit" "$offset")
 do
     count=`expr $count + 1`
     filedest=`printf ""$dirtmp"snap_%.4d.jpg" "$count"`
