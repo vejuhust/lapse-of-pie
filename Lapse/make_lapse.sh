@@ -27,7 +27,7 @@ mkdir "$dirtmp"
 
 # prepare photos
 count=0
-for filesrc in $(./filter_file.sh "$dirsrc" "$limit" "$offset")
+for filesrc in $(./filter_file.sh "$dirsrc" "$limit" "$offset" 0 24)
 do
     count=`expr $count + 1`
     filedest=`printf ""$dirtmp"snap_%.4d.jpg" "$count"`

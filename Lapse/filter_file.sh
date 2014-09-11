@@ -1,14 +1,19 @@
 #!/bin/bash
 
+if [ $# -lt 5 ];
+then
+    printf "arguments missing, needs 5 \n"
+    exit 1
+fi
+
 dirsrc="$1"
 limit="$2"
 offset="$3"
+hour_min="$4"
+hour_max="$5"
 
 index_head=`expr $limit + $offset`
 index_tail=`expr $limit`
-
-hour_min=0
-hour_max=24
 
 for filename in $(ls "$dirsrc"*.jpg | sort -r)
 do
