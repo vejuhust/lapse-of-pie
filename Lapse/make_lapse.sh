@@ -9,6 +9,7 @@ fi
 
 case "$model" in
 d )
+    day_offset=0
     day_limit=1
     hour_min=4
     hour_max=22
@@ -17,6 +18,7 @@ d )
     song=p2112104.mp4
     ;;
 w )
+    day_offset=0
     day_limit=5
     hour_min=6
     hour_max=18
@@ -30,7 +32,7 @@ w )
     ;;
 esac
 
-offset=0
+offset=$(expr '(' $hour_max - $hour_min ')' \* $day_offset \* 60)
 limit=$(expr '(' $hour_max - $hour_min ')' \* $day_limit \* 60)
 dirsrc=/root/snap/
 dirdest=/root/lapse/
