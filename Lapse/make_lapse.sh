@@ -15,7 +15,9 @@ c )
     hour_max=20
     fps=30
     crf=19
+    width=2592
     song=p2112104.mp4
+    convert=cp
     ;;
 d )
     day_offset=0
@@ -24,6 +26,7 @@ d )
     hour_max=22
     fps=20
     crf=20
+    width=1296
     song=p2112104.mp4
     ;;
 w )
@@ -33,6 +36,7 @@ w )
     hour_max=18
     fps=30
     crf=21
+    width=1296
     song=p667730.mp4
     ;;
 *)
@@ -68,11 +72,11 @@ for filesrc in $(./filter_file.sh "$dirsrc" "$limit" "$offset" "$hour_min" "$hou
 do
     count=`expr $count + 1`
     filedest=`printf ""$dirtmp"snap_%.4d.jpg" "$count"`
-    ./convert_frame.sh "$filesrc" "$filedest"
+    ./convert_frame.sh "$filesrc" "$filedest" "$convert"
 done
 
 # generate h264 version video for modern browsers' users
-ffmpeg -y -vn -f image2 -i "$dirtmp"snap_%04d.jpg -i "$bgmmp4" -shortest -r "$fps" -vf scale=1296:-1 -vcodec libx264 -crf "$crf" -tune stillimage -profile:v high -level 4.2 -acodec aac -ab 128k -strict experimental "$filemp4"
+ffmpeg -y -vn -f image2 -i "$dirtmp"snap_%04d.jpg -i "$bgmmp4" -shortest -r "$fps" -vf scale="$width":-1 -vcodec libx264 -crf "$crf" -tune stillimage -profile:v high -level 4.2 -acodec aac -ab 128k -strict experimental "$filemp4"
 
 # generate wmv version video for old-fashion browsers' users (for weekly video only)
 if [ "w" == "$model" ];

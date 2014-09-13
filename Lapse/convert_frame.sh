@@ -6,7 +6,13 @@ filedest="$2"
 filetmp=/tmp/framewt.jpg
 
 # status
-printf "%s -> %s\n" "$1" "$2"
+if [ "cp" = "$3" ];
+then
+    cp -v "$filesrc" "$filedest"
+    exit
+else
+    printf "convert %s -> %s\n" "$filesrc" "$filedest"
+fi
 
 # get file name
 name=${filesrc##*snap}
