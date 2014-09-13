@@ -74,25 +74,29 @@ done
 # generate h264 version video for modern browsers' users
 ffmpeg -y -vn -f image2 -i "$dirtmp"snap_%04d.jpg -i "$bgmmp4" -shortest -r "$fps" -vf scale=1296:-1 -vcodec libx264 -crf "$crf" -tune stillimage -profile:v high -level 4.2 -acodec aac -ab 128k -strict experimental "$filemp4"
 
-# generate wmv version video for old-fashion browsers' users
-ffmpeg -i "$bgmmp4" -y -vn -acodec libmp3lame -ac 2 -ab 128k -ar 48000 "$bgmmp3"
-mencoder mf://"$dirtmp"snap*.jpg -mf fps="$fps":type=jpg -ovc lavc -lavcopts vcodec=wmv2:vbitrate=30720000:trell -vf scale=1296:972 -audiofile "$bgmmp3" -oac mp3lame -o "$filewmv"
+# generate wmv version video for old-fashion browsers' users (for weekly video only)
+if [ "w" == "$model" ];
+then
+    ffmpeg -i "$bgmmp4" -y -vn -acodec libmp3lame -ac 2 -ab 128k -ar 48000 "$bgmmp3"
+    mencoder mf://"$dirtmp"snap*.jpg -mf fps="$fps":type=jpg -ovc lavc -lavcopts vcodec=wmv2:vbitrate=30720000:trell -vf scale=1296:972 -audiofile "$bgmmp3" -oac mp3lame -o "$filewmv"
+fi
 
 # copy to the Web
-if [ "c" != "$model" ];
+if [ "w" == "$model" ];
 then
-    cp "$filemp4" "$dirweb"alpha.mp4
-    cp "$filewmv" "$dirweb"alpha.wmv
+    cp -v "$filemp4" "$dirweb"alpha.mp4
+    cp -v "$filewmv" "$dirweb"alpha.wmv
 fi
 
 if [ "d" = "$model" ];
 then
-    cp "$filemp4" "$dayfile"
+    cp -v "$filemp4" "$dayfile"
 fi
 
 # archive it
-mv "$filemp4" "$arcfile"
+mv -v "$filemp4" "$arcfile"
+rm -v "$filewmv"
 
 # share it
-cp "$arcfile" "$dirshare"
-cp "$arcfile" "$dirpublic"
+cp -v "$arcfile" "$dirshare"
+cp -v "$arcfile" "$dirpublic"
