@@ -15,7 +15,6 @@ c )
     hour_max=20
     fps=30
     crf=19
-    width=2592
     song=p2112104.mp4
     convert=cp
     ;;
@@ -79,14 +78,14 @@ done
 ffmpeg -y -vn -f image2 -i "$dirtmp"snap_%04d.jpg -i "$bgmmp4" -shortest -r "$fps" "$scale" -vcodec libx264 -crf "$crf" -tune stillimage -profile:v high -level 4.2 -acodec aac -ab 128k -strict experimental "$filemp4"
 
 # generate wmv version video for old-fashion browsers' users (for weekly video only)
-if [ "w" == "$model" ];
+if [ "w" = "$model" ];
 then
     ffmpeg -i "$bgmmp4" -y -vn -acodec libmp3lame -ac 2 -ab 128k -ar 48000 "$bgmmp3"
     mencoder mf://"$dirtmp"snap*.jpg -mf fps="$fps":type=jpg -ovc lavc -lavcopts vcodec=wmv2:vbitrate=30720000:trell -vf scale=1296:972 -audiofile "$bgmmp3" -oac mp3lame -o "$filewmv"
 fi
 
 # copy to the Web
-if [ "w" == "$model" ];
+if [ "w" = "$model" ];
 then
     cp -v "$filemp4" "$dirweb"alpha.mp4
     cp -v "$filewmv" "$dirweb"alpha.wmv
