@@ -4,10 +4,19 @@ if [ $# -ge 1 ];
 then
     model="$1"
 else
-    model=d
+    model=c
 fi
 
 case "$model" in
+c )
+    day_offset=0
+    day_limit=1
+    hour_min=4
+    hour_max=20
+    fps=30
+    crf=19
+    song=p2112104.mp4
+    ;;
 d )
     day_offset=0
     day_limit=1
@@ -36,7 +45,7 @@ offset=$(expr '(' $hour_max - $hour_min ')' \* $day_offset \* 60)
 limit=$(expr '(' $hour_max - $hour_min ')' \* $day_limit \* 60)
 dirsrc=/root/snap/
 dirdest=/root/lapse/
-dirtmp=/tmp/lapseframetmp/
+dirtmp=/tmp/lapseframetmp"$model"/
 dirweb=/data/www/lapse/
 dirshare=/root/Dropbox/MicrosoftSuzhou/
 dirpublic=/media/networkshare/stcsuz/lapsevideo/
@@ -70,8 +79,11 @@ ffmpeg -i "$bgmmp4" -y -vn -acodec libmp3lame -ac 2 -ab 128k -ar 48000 "$bgmmp3"
 mencoder mf://"$dirtmp"snap*.jpg -mf fps="$fps":type=jpg -ovc lavc -lavcopts vcodec=wmv2:vbitrate=30720000:trell -vf scale=1296:972 -audiofile "$bgmmp3" -oac mp3lame -o "$filewmv"
 
 # copy to the Web
-cp "$filemp4" "$dirweb"alpha.mp4
-cp "$filewmv" "$dirweb"alpha.wmv
+if [ "c" != "$model" ];
+then
+    cp "$filemp4" "$dirweb"alpha.mp4
+    cp "$filewmv" "$dirweb"alpha.wmv
+fi
 
 if [ "d" = "$model" ];
 then

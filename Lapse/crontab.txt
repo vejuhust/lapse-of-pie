@@ -1,3 +1,4 @@
 # m h  dom mon dow   command
-3 22 * * *  (/root/lapse/make_lapse.sh 18; /root/lapse/release_lapse.sh)
+30 18 * * *  (/root/lapse/make_lapse.sh w; /root/lapse/release_lapse.sh)
+30 22 * * *  (/root/lapse/make_lapse.sh d; )
 0 4 * * * (for file in $(find /root/cache -mmin +120 -name "*.jpg" | sort); do mv -v "$file" /media/networkshare/stcsuz/alpha/; done)
