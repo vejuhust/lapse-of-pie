@@ -5,6 +5,9 @@ filesrc="$1"
 filedest="$2"
 filetmp=/tmp/framewt.jpg
 
+# status
+printf "%s -> %s\n" "$1" "$2"
+
 # get file name
 name=${filesrc##*snap}
 

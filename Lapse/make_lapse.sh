@@ -46,6 +46,7 @@ fileavi="$dirdest"timelapse.avi
 filemp4="$dirdest"timelapse.mp4
 filewmv="$dirdest"timelapse.wmv
 arcfile="$dirdest"archive/lapse"$(date '+-%Y_%m_%d-%H_%M_%S')".mp4
+dayfile="$dirweb"archive/lapse"$(date '+-%Y_%m_%d')".mp4
 
 # start from here
 cd "$( dirname "${BASH_SOURCE[0]}" )"
@@ -71,6 +72,11 @@ mencoder mf://"$dirtmp"snap*.jpg -mf fps="$fps":type=jpg -ovc lavc -lavcopts vco
 # copy to the Web
 cp "$filemp4" "$dirweb"alpha.mp4
 cp "$filewmv" "$dirweb"alpha.wmv
+
+if [ "d" = "$model" ];
+then
+    cp "$filemp4" "$dayfile"
+fi
 
 # archive it
 mv "$filemp4" "$arcfile"
