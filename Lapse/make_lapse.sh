@@ -11,13 +11,13 @@ case "$model" in
 c )
     day_offset=0
     day_limit=1
-    hour_min=4
+    hour_min=7
     hour_max=20
     fps=30
-    crf=19
-    width=-1
+    crf=18
+    width=1296
     song=p2112104.mp4
-    convert=cp
+    #convert=cp
     ;;
 d )
     day_offset=0
