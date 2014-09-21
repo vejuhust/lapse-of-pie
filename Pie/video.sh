@@ -1,7 +1,9 @@
 #!/bin/sh
 
 cd /root/video/
-filename=clip$(date '+-%Y_%m_%d-%H_%M_%S-')$(printf "%.3d" $(ls | wc -l))-$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
+
+filename_index_offset=1
+filename=clip$(date '+-%Y_%m_%d-%H_%M_%S-')$(printf "%.3d" $(expr $filename_index_offset + $(ls | wc -l)))-$(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 8 | head -n 1)
 file_h264="$filename".h264
 file_mp4="$filename".mp4
 
