@@ -1,4 +1,11 @@
 #!/bin/sh
 
+filename=snap"$(date '+-%Y_%m_%d-%H_%M_%S')".jpg
+
 cd /root/snapshot/
-raspistill -rot 180 -o snap"$(date '+-%Y_%m_%d-%H_%M_%S')".jpg
+if [ "r" = "$1" ];
+then
+    raspistill -rot 180 -o "$filename"
+else
+    raspistill -o "$filename"
+fi

@@ -2,5 +2,5 @@
 * * * * * /root/script/photo.sh
 0 * * * *  /root/script/mailip.sh
 @reboot  /root/script/mailip.sh
-*/5 * * * * (sleep 10; rsync -aP /root/snapshot/*.jpg root@172.26.100.67:/root/snap/)
+*/5 * * * * (sleep 10; rsync -aP /root/snapshot/*.jpg root@stcaloc:/root/snap/)
 0 1 * * * ( for file in $(find ~/snapshot/ -mmin +120 -name *.jpg | sort); do mv -v "$file" /media/networkshare/stcaloc/; done )

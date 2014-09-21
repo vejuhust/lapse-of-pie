@@ -50,16 +50,13 @@ limit=$(expr '(' $hour_max - $hour_min ')' \* $day_limit \* 60)
 dirsrc=/root/snap/
 dirdest=/root/lapse/
 dirtmp=/tmp/lapseframetmp"$model"/
-dirweb=/data/www/lapse/
+dirweb=/media/networkshare/web/
 dirshare=/root/Dropbox/MicrosoftSuzhou/
 dirpublic=/media/networkshare/stcsuz/lapsevideo/
 bgmmp4="$dirdest"song/"$song"
-bgmmp3=/tmp/bgm.mp3
-fileavi="$dirdest"timelapse.avi
 filemp4="$dirdest"timelapse.mp4
-filewmv="$dirdest"timelapse.wmv
 arcfile="$dirdest"archive/lapse"$(date '+-%Y_%m_%d-%H_%M_%S')".mp4
-dayfile="$dirweb"archive/lapse"$(date '+-%Y_%m_%d')".mp4
+dayfile="$dirweb"timelapse_archive/lapse"$(date '+-%Y_%m_%d')".mp4
 
 # start from here
 cd "$( dirname "${BASH_SOURCE[0]}" )"
@@ -78,18 +75,10 @@ done
 # generate h264 version video for modern browsers' users
 ffmpeg -y -vn -f image2 -i "$dirtmp"snap_%04d.jpg -i "$bgmmp4" -shortest -r "$fps" -vf scale="$width":-1 -vcodec libx264 -crf "$crf" -tune stillimage -profile:v high -level 4.2 -acodec aac -ab 128k -strict experimental "$filemp4"
 
-# generate wmv version video for old-fashion browsers' users (for weekly video only)
+# release to the Web
 if [ "w" = "$model" ];
 then
-    ffmpeg -i "$bgmmp4" -y -vn -acodec libmp3lame -ac 2 -ab 128k -ar 48000 "$bgmmp3"
-    mencoder mf://"$dirtmp"snap*.jpg -mf fps="$fps":type=jpg -ovc lavc -lavcopts vcodec=wmv2:vbitrate=30720000:trell -vf scale="$width":-1 -audiofile "$bgmmp3" -oac mp3lame -o "$filewmv"
-fi
-
-# copy to the Web
-if [ "w" = "$model" ];
-then
-    cp -v "$filemp4" "$dirweb"alpha.mp4
-    cp -v "$filewmv" "$dirweb"alpha.wmv
+    cp -v "$filemp4" "$dirweb"
 fi
 
 if [ "d" = "$model" ];
@@ -99,7 +88,6 @@ fi
 
 # archive it
 mv -v "$filemp4" "$arcfile"
-rm -v "$filewmv"
 
 # share it
 cp -v "$arcfile" "$dirshare"
