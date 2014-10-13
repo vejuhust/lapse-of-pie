@@ -3,7 +3,7 @@
 filelogo=logo.png
 filesrc="$1"
 filedest="$2"
-filetmp=/tmp/framewt.jpg
+filetmp=${filedest%.*}.tmp.jpg
 
 # status
 if [ "cp" = "$3" ];
@@ -35,3 +35,6 @@ convert -size 700x100 xc:none -gravity west \
         -stroke none -fill white -font Noteworthy.ttc -pointsize 54 -annotate 0 "$timestamp" \
         "$filetmp" +swap -gravity northwest -geometry +50+180 \
         -composite "$filedest"
+
+# clean up
+rm -fv "$filetmp"
