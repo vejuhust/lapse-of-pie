@@ -108,8 +108,8 @@ time_start = time() ###
 print(photo_directory)
 create_photo_list()
 
-print(len(photo_path_list))
 photo_path_list = load_photo_list()
+print(len(photo_path_list))
 datetime_path_dict = combine_datetime_with_path_dict(photo_path_list)
 datetime_path_list = list(datetime_path_dict.items())
 
