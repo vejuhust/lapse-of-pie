@@ -25,7 +25,7 @@ done
 fps=30
 crf=18
 width=1296
-song=p2112104.mp4
+song=p2126727.mp4
 if [[ $SKIP_WATERMARK ]];
 then
     echo "skip adding watermark to photos"
