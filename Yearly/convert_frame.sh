@@ -32,7 +32,7 @@ composite -dissolve 75% -gravity northwest -geometry +50+50 \( "$filelogo" -thum
 convert -size 700x100 xc:none -gravity west \
         -stroke black -strokewidth 10 -font Noteworthy.ttc -pointsize 54 -annotate 0 "$timestamp" \
         -background none -shadow 100x3+0+0 +repage \
-        -stroke none -fill white -font Noteworthy.ttc -pointsize 54 -annotate 0 "$timestamp" \
+        -stroke none -fill white -font Menlo.ttc -pointsize 54 -annotate 0 "$timestamp" \
         "$filetmp" +swap -gravity northwest -geometry +50+180 \
         -composite "$filedest"
 
