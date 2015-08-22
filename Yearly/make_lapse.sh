@@ -6,11 +6,12 @@ width=1296
 song=p2112104.mp4
 #convert=cp
 
-dirsrc=/root/fy16/selected/
-dirdest=/root/fy16/result/
+rootdir=/root/fy16/
+dirsrc="$rootdir"selected/
+dirdest="$rootdir"result/
 dirtmp=/tmp/fy16lapseframetmp/
 dirpublic=/media/networkshare/stcsuz/sharing/fy16video/
-bgmmp4=/root/fy16/song/"$song"
+bgmmp4="$rootdir"song/"$song"
 filemp4="$dirdest"timelapse.mp4
 arcfile="$dirdest"fy16-clip"$(date '+-%Y_%m_%d-%H_%M_%S')".mp4
 
@@ -20,8 +21,9 @@ rm -fr "$dirtmp"
 mkdir "$dirtmp"
 
 # copy photos
-cp -v copy-yearly-photo.py /root/fy16/
-python3 /root/fy16/copy-yearly-photo.py
+rm -fr "$dirsrc"
+cp -v copy-yearly-photo.py "$rootdir"
+python3 "$rootdir"copy-yearly-photo.py
 
 # prepare photos
 count=0
