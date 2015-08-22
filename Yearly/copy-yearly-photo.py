@@ -2,7 +2,7 @@
 
 from os import listdir, makedirs
 from os.path import join, dirname, abspath
-from json import dump, loads
+from json import dump, dumps, loads
 from re import compile, IGNORECASE
 from datetime import datetime, timedelta
 from time import time
@@ -69,7 +69,7 @@ def combine_datetime_with_path_dict(path_list):
 
 
 # 12:00, 12:03, 12:06 - three frames per day
-def get_photo_series_1(date_first, photo_series, path_dict):
+def get_photo_series_1(date_first, date_last, path_dict):
     photo_series = []
     delta_offset = timedelta(0, 12 * 60 * 60)
     delta_day = timedelta(1, 0)
@@ -86,7 +86,7 @@ def get_photo_series_1(date_first, photo_series, path_dict):
 
 
 # 11:00, 11:30, 12:00, 12:30, 13:00 - five frames per day
-def get_photo_series_2(date_first, photo_series, path_dict):
+def get_photo_series_2(date_first, date_last, path_dict):
     photo_series = []
     delta_offset = timedelta(0, 11 * 60 * 60)
     delta_day = timedelta(1, 0)
@@ -99,6 +99,24 @@ def get_photo_series_2(date_first, photo_series, path_dict):
                 photo_series.append(path_dict[current_datetime])
             current_datetime += delta_minute
         current_date += delta_day
+    return photo_series
+
+
+# Day1: 06:00, 06:01, Day2: 06:02, 06:03 - two frames per day from sunrise to sunset
+def get_photo_series_3(date_first, date_last, path_dict, clock_start = 6, frame_per_day = 2):
+    photo_series = []
+    delta_start = timedelta(0, clock_start * 60 * 60)
+    delta_day = timedelta(1, 0)
+    delta_minute = timedelta(0, 60)
+    current_date = date_first
+    current_datetime = delta_start + datetime(current_date.year, current_date.month, current_date.day)
+    while (current_date <= date_last):
+        for _ in range(frame_per_day):
+            if current_datetime in path_dict:
+                photo_series.append(path_dict[current_datetime])
+                current_datetime += delta_minute
+        current_datetime += delta_day
+        current_date = current_datetime.date()
     return photo_series
 
 
@@ -121,10 +139,10 @@ print(date_first) ###
 print(date_last) ###
 
 
-photo_series = get_photo_series_2(date_first, date_last, datetime_path_dict)
+photo_series = get_photo_series_3(date_first, date_last, datetime_path_dict)
 print(len(photo_series)) ###
-print(photo_series[0]) ###
-print(photo_series[-1]) ###
+print(dumps(photo_series[:5], sort_keys=False, indent=2, ensure_ascii=False)) ###
+print(dumps(photo_series[-5:], sort_keys=False, indent=2, ensure_ascii=False)) ###
 
 
 photo_target_path = join(dirname(abspath(__file__)), "selected")
