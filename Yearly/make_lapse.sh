@@ -1,5 +1,30 @@
 #!/bin/bash
 
+while [[ $# > 1 ]]
+do
+    key="$1"
+    case $key in
+        -sc|--skip-copy)
+            SKIP_COPY=1
+            ;;
+        -sp|--skip-prepare)
+            SKIP_PREPARE=1
+            ;;
+        -sm|--skip-make)
+            SKIP_MAKE=1
+            ;;
+        *)
+            ;;
+    esac
+    shift # past argument or value
+done
+
+echo "$SKIP_COPY"
+echo "$SKIP_PREPARE"
+echo "$SKIP_MAKE"
+
+exit 0
+
 fps=30
 crf=18
 width=1296
@@ -17,13 +42,15 @@ arcfile="$dirdest"fy16-clip"$(date '+-%Y_%m_%d-%H_%M_%S')".mp4
 
 # start from here
 cd "$( dirname "${BASH_SOURCE[0]}" )"
-rm -fr "$dirtmp"
-mkdir "$dirtmp"
 
 # copy photos
 rm -fr "$dirsrc"
 cp -v copy-yearly-photo.py "$rootdir"
 python3 "$rootdir"copy-yearly-photo.py
+
+# remove existing converted photos
+rm -fr "$dirtmp"
+mkdir "$dirtmp"
 
 # prepare photos
 count=0
