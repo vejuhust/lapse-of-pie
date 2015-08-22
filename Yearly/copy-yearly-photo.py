@@ -14,12 +14,12 @@ photo_directory = r"/media/networkshare/stcsuz/lapsephoto"
 
 
 def save_file(filename, data):
-    with open(filename, 'w') as outfile:
+    with open(join(dirname(abspath(__file__)), filename), 'w') as outfile:
         dump(data, outfile)
 
 
 def load_file(filename):
-    with open(filename, 'r') as infile:
+    with open(join(dirname(abspath(__file__)), filename), 'r') as infile:
         return loads(infile.read())
 
 
@@ -68,6 +68,7 @@ def combine_datetime_with_path_dict(path_list):
     return combined_dict
 
 
+# 12:00, 12:03, 12:06 - three frames per day
 def get_photo_series_1(date_first, photo_series, path_dict):
     photo_series = []
     delta_offset = timedelta(0, 12 * 60 * 60)
@@ -77,6 +78,23 @@ def get_photo_series_1(date_first, photo_series, path_dict):
     while (current_date <= date_last):
         current_datetime = delta_offset + datetime(current_date.year, current_date.month, current_date.day)
         for _ in range(3):
+            if current_datetime in path_dict:
+                photo_series.append(path_dict[current_datetime])
+            current_datetime += delta_minute
+        current_date += delta_day
+    return photo_series
+
+
+# 11:00, 11:30, 12:00, 12:30, 13:00 - five frames per day
+def get_photo_series_2(date_first, photo_series, path_dict):
+    photo_series = []
+    delta_offset = timedelta(0, 11 * 60 * 60)
+    delta_day = timedelta(1, 0)
+    delta_minute = timedelta(0, 60 * 30)
+    current_date = date_first
+    while (current_date <= date_last):
+        current_datetime = delta_offset + datetime(current_date.year, current_date.month, current_date.day)
+        for _ in range(5):
             if current_datetime in path_dict:
                 photo_series.append(path_dict[current_datetime])
             current_datetime += delta_minute
@@ -102,7 +120,7 @@ print(date_first) ###
 print(date_last) ###
 
 
-photo_series = get_photo_series_1(date_first, date_last, datetime_path_dict)
+photo_series = get_photo_series_2(date_first, date_last, datetime_path_dict)
 print(len(photo_series)) ###
 print(photo_series[0]) ###
 print(photo_series[-1]) ###
