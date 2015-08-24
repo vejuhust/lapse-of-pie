@@ -22,7 +22,7 @@ do
     shift # past argument or value
 done
 
-fps=30
+fps=24
 crf=18
 width=1296
 song=p2126727.mp4
