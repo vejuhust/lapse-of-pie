@@ -121,7 +121,7 @@ def get_photo_series_3(date_first, date_last, path_dict, clock_start = 6, frame_
 
 
 # Day1: 06:00, 06:01, 06:02, Day2: 06:02, 06:03, 06:04 - three frames per day from sunrise to sunset
-def get_photo_series_4(date_first, date_last, path_dict, clock_start = 6, frame_per_day = 3):
+def get_photo_series_4(date_first, date_last, path_dict, clock_start = 7, frame_per_day = 3):
     photo_series = []
     delta_start = timedelta(0, clock_start * 60 * 60)
     delta_day = timedelta(1, 0)

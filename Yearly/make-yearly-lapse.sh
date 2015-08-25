@@ -77,7 +77,7 @@ then
     echo "skip making video"
 else
     # generate h264 version video for modern browsers' users
-    ffmpeg -y -vn -f image2 -i "$dirtmp"snap_%04d.jpg -i "$bgmmp4" -shortest -r "$fps" -vf scale="$width":-1 -vcodec libx264 -crf "$crf" -tune stillimage -profile:v high -level 4.2 -acodec aac -ab 128k -strict experimental "$filemp4"
+    ffmpeg -y -vn -f image2 -i "$dirtmp"snap_%04d.jpg -r "$fps" -i "$bgmmp4" -shortest -vf scale="$width":-1 -vcodec libx264 -crf "$crf" -tune stillimage -profile:v high -level 4.2 -acodec aac -ab 128k -strict experimental "$filemp4"
 
     # archive & share it
     mv -v "$filemp4" "$arcfile"
